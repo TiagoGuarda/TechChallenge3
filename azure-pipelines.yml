@@ -43,7 +43,7 @@ steps:
     script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=test@test" -e "MSSQL_PID=Express" -p 1433:1433 -d --name=sql mcr.microsoft.com/mssql/server:latest'
     pwsh: true
 
- - task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2
   displayName: Running tests
   inputs:
     command: 'test'
