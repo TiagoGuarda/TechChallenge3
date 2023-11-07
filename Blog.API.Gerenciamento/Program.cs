@@ -14,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
 builder.Services.AddControllers();
 
+// Application Insights
+builder.Services.AddApplicationInsightsTelemetry();
+
 // Serviços e Repositórios
 builder.Services.AddScoped<INoticiaService, NoticiaService>();
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
