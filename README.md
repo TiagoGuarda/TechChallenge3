@@ -1,6 +1,9 @@
 # Tech Challenge 3
 Solution de um blog de notícias contendo uma API de Autenticação e uma outra API para Gerenciamento das notícias do blog.
 
+<i>Versão 1.1</i>
+- Adicionado testes de unidade e testes de integração.
+
 ## Enpoint de Autenticação:
 <b>[POST] {url}/api/Autenticacao/Login</b><br>
 <i>Método utilizado para gerar um bearer token para ser utilizado nos métodos da API de gerenciamento.</i>
