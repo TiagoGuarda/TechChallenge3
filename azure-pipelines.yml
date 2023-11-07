@@ -40,7 +40,14 @@ steps:
   displayName: Pulling docker image of SQL Server Express
   inputs:
     targetType: 'inline'
-    script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=test@test" -e "MSSQL_PID=Express" -p 1433:1433 -d --name=sql mcr.microsoft.com/mssql/server:latest'
+    script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Test@test123!" -e "MSSQL_PID=Express" -p 1435:1433 -d --name=sql mcr.microsoft.com/mssql/server:latest'
+    pwsh: true
+
+- task: PowerShell@2
+  displayName: Checking docker image of SQL Server Express is running
+  inputs:
+    targetType: 'inline'
+    script: 'docker ps'
     pwsh: true
 
 - task: DotNetCoreCLI@2
