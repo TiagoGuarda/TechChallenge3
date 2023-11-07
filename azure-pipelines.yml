@@ -15,27 +15,37 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
+- checkout: self
 
-- task: NuGetCommand@2
+- task: UseDotNet@2
+  displayName: Setup .NET
   inputs:
-    restoreSolution: '$(solution)'
+    packageType: 'sdk'
+    version: '6.x'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: Restore dependencies
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'restore'
+    projects: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: PowerShell@2
-  displayName: Pulling Docker Image of SQL Server Express
+  displayName: Pulling docker image of SQL Server Express
   inputs:
     targetType: 'inline'
     script: 'docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=test@test" -e "MSSQL_PID=Express" -p 1433:1433 -d --name=sql mcr.microsoft.com/mssql/server:latest'
     pwsh: true
 
-- task: VSTest@2
+ - task: DotNetCoreCLI@2
+  displayName: Running tests
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)'
