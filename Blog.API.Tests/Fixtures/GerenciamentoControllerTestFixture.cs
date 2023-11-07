@@ -21,7 +21,7 @@ namespace Blog.API.Tests.Fixtures
 
         public GerenciamentoControllerTestFixture()
         {
-            var connectionString = @"Server=localhost,1433;Initial Catalog=test;Integrated Security=True;User Id=sa;Password=test@test";
+            var connectionString = @"Server=localhost,1433;Initial Catalog=master;Integrated Security=True;User Id=sa;Password=test@test";
             var options = new DbContextOptionsBuilder<NoticiasContext>().UseSqlServer(connectionString).Options;
 
             _context = new NoticiasContext(options);
